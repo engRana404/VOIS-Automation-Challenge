@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public final class ElementActions {
 
     private ElementActions() {
@@ -13,6 +15,11 @@ public final class ElementActions {
 
     public static WebElement findElement(WebDriver driver, By locator) {
         return driver.findElement(locator);
+    }
+
+    // Method to find multiple elements
+    public static List<WebElement> findElements(WebDriver driver, By locator) {
+        return driver.findElements(locator);
     }
 
     public static WebElement clickElement(WebDriver driver, By locator) {
