@@ -10,7 +10,7 @@ import java.time.Duration;
 
 public class WaitUtils {
     private WebDriver driver;
-    private static final int DEFAULT_WAIT_TIME_SECONDS = 10;
+    private static final int DEFAULT_WAIT_TIME_SECONDS = PropertiesUtils.getIntPropertyValue("timeout");
 
     private WaitUtils() {
         // Prevent instantiation
