@@ -1,5 +1,6 @@
 package com.vois.utils.actions;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class BrowserActions {
@@ -33,5 +34,12 @@ public class BrowserActions {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    // Navigate to a specific page number using a locator with a placeholder for the page number
+    public static void goToPage(WebDriver driver, By nextPageLocator, int pageNumber) {
+        String xpathWithPage = nextPageLocator.toString().replace("{pageNumber}", String.valueOf(pageNumber));
+        By nextPage = By.xpath(xpathWithPage.substring(xpathWithPage.indexOf(":") + 1));
+        ElementActions.clickElement(driver, nextPage);
     }
 }
