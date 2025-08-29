@@ -57,4 +57,11 @@ public final class ElementActions {
     public static String getValue(WebDriver driver, By locator) {
         return findElement(driver, locator).getDomAttribute("value");
     }
+
+    /**
+     * Returns the number of sections found by the locator.
+     */
+    public static int getSectionsCount(WebDriver driver, By sectionsLocator) {
+        return ElementActions.findElements(driver, sectionsLocator).size();
+    }
 }
