@@ -19,18 +19,21 @@ public class WaitUtils {
 
     // Method to wait for an element to be visible
     public static WebElement waitForElementToBeVisible(WebDriver driver, By locator) {
+        LogsUtil.info("Waiting for element to be visible: " + locator.toString());
         return new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_WAIT_TIME_SECONDS))
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     // Method to wait until all elements are visible
     public static java.util.List<WebElement> waitForAllElementsVisible(WebDriver driver, By locator) {
+        LogsUtil.info("Waiting for all elements to be visible: " + locator.toString());
         return new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_WAIT_TIME_SECONDS))
                 .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
     // Method to wait for an element to be clickable
     public static WebElement waitForElementToBeClickable(WebDriver driver, By locator) {
+        LogsUtil.info("Waiting for element to be clickable: " + locator.toString());
         return new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_WAIT_TIME_SECONDS))
                 .until(ExpectedConditions.elementToBeClickable(locator));
     }

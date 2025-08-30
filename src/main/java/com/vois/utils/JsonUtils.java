@@ -9,10 +9,12 @@ public class JsonUtils {
     }
 
     public static String getJsonFilePath() {
+        LogsUtil.info("JSON file path: " + JSON_FILE_PATH);
         return JSON_FILE_PATH;
     }
 
     public static String getTestData(String key) {
+        LogsUtil.info("Retrieving test data for key: " + key);
         String data = "";
         try (java.io.FileReader reader = new java.io.FileReader(JSON_FILE_PATH)) {
             com.google.gson.JsonObject jsonObject = com.google.gson.JsonParser.parseReader(reader).getAsJsonObject();

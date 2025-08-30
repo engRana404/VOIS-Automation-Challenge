@@ -22,10 +22,12 @@ public class PropertiesUtils {
     }
 
     public static String getPropertyValue(String key) {
+        LogsUtil.info("Retrieving property for key: " + key);
         return properties.getProperty(key);
     }
 
     public static int getIntPropertyValue(String key) {
+        LogsUtil.info("Retrieving integer property for key: " + key);
         String value = properties.getProperty(key);
         if (value != null) {
             try {
@@ -35,9 +37,5 @@ public class PropertiesUtils {
             }
         }
         throw new RuntimeException("Property key not found: " + key);
-    }
-
-    public static Properties loadProperties() {
-        return properties;
     }
 }

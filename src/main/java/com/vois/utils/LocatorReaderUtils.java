@@ -23,11 +23,13 @@ public class LocatorReaderUtils {
     }
 
     public static String getLocatorValue(String page, String elementName) {
+        LogsUtil.info("Retrieving locator for page: " + page + ", element: " + elementName);
         JsonNode node = locators.path(page).path(elementName);
         return node.path("value").asText();
     }
 
     public static By getLocator(String page, String elementName, String... replacements) {
+        LogsUtil.info("Retrieving locator for page: " + page + ", element: " + elementName);
         JsonNode node = locators.path(page).path(elementName);
         String type = node.path("type").asText();
         String value = node.path("value").asText();

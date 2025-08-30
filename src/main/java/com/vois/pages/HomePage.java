@@ -1,6 +1,7 @@
 package com.vois.pages;
 
 import com.vois.utils.LocatorReaderUtils;
+import com.vois.utils.LogsUtil;
 import com.vois.utils.actions.BrowserActions;
 import com.vois.utils.actions.ElementActions;
 import org.openqa.selenium.By;
@@ -22,6 +23,7 @@ public class HomePage {
 
     // Convenience method: perform a search in one step
     public void search(String keyword) {
+        LogsUtil.info("Performing search for: " + keyword);
         WebElement box = driver.findElement(searchBox);
         box.sendKeys(keyword);
         box.submit(); // This triggers the form submission

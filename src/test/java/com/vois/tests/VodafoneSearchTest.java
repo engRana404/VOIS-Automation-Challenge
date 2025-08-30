@@ -4,6 +4,7 @@ import com.vois.drivers.BrowserFactory;
 import com.vois.pages.HomePage;
 import com.vois.pages.ResultsPage;
 import com.vois.utils.JsonUtils;
+import com.vois.utils.LogsUtil;
 import com.vois.utils.PropertiesUtils;
 import com.vois.utils.ValidationUtils;
 import com.vois.utils.actions.BrowserActions;
@@ -27,6 +28,7 @@ public class VodafoneSearchTest {
 
     @BeforeClass
     public void setup() {
+        LogsUtil.info("Setting up the test environment");
         driver = BrowserFactory.getDriver();
         driver.get(PropertiesUtils.getPropertyValue("baseUrl"));
         homePage = new HomePage(driver);
@@ -44,9 +46,10 @@ public class VodafoneSearchTest {
     @Test(priority = 2, dependsOnMethods = "searchForVodafone")
     public void validateFirstPageHasResults() {
         int resultsCount = resultsPage.getSearchResultsCount(driver);
-        System.out.println("Results found on page 1: " + resultsCount);
+        LogsUtil.info("Results found on page 1: " + resultsCount);
         Assert.assertTrue(resultsCount > 0, "No search results found on page 1!");
 
+        LogsUtil.info("Validating related search sections");
         boolean relatedSectionsValid = resultsPage.validateRelatedSearchSections(EXPECTED_RELATED_TEXT, EXPECTED_RELATED_SECTIONS_COUNT);
         Assert.assertTrue(relatedSectionsValid, "Related search sections validation failed!");
     }
@@ -55,20 +58,22 @@ public class VodafoneSearchTest {
     public void validateSearchResultsAcrossPages() {
         resultsPage.goToPage(2);
         int page2Count = resultsPage.getSearchResultsCount(driver);
-        System.out.println("Results found on page 2: " + page2Count);
+        LogsUtil.info("Results found on page 2: " + page2Count);
         Assert.assertTrue(page2Count > 0, "No search results found on page 2!");
 
         resultsPage.goToPage(3);
         int page3Count = resultsPage.getSearchResultsCount(driver);
-        System.out.println("Results found on page 3: " + page3Count);
+        LogsUtil.info("Results found on page 3: " + page3Count);
         Assert.assertTrue(page3Count > 0, "No search results found on page 3!");
 
+        LogsUtil.info("Validate that page 2 and page 3 results count match");
         boolean resultCount = ValidationUtils.compareElementCounts(driver, page2Count, page3Count);
         Assert.assertTrue(resultCount, "Search results count on page 2 and 3 do not match!");
     }
 
     @AfterClass
     public void teardown() {
+        LogsUtil.info("Close Browser");
         BrowserFactory.quitDriver();
     }
 }

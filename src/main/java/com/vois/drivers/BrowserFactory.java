@@ -1,5 +1,6 @@
 package com.vois.drivers;
 
+import com.vois.utils.LogsUtil;
 import com.vois.utils.PropertiesUtils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
@@ -22,6 +23,7 @@ public class BrowserFactory {
 
     @Step("Create driver instance for browser: {browserType}")
     private static WebDriver createDriver(String browserType) {
+        LogsUtil.info("Creating WebDriver instance for browser: " + browserType);
         WebDriver driver;
 
         switch (browserType.toUpperCase()) {
@@ -100,6 +102,7 @@ public class BrowserFactory {
     }
 
     public static WebDriver getDriver() {
+        LogsUtil.info("Retrieving WebDriver instance for the current thread");
         if (driverThread.get() == null) {
             String browserType = PropertiesUtils.getPropertyValue("browserType");
             driverThread.set(createDriver(browserType));
@@ -108,6 +111,7 @@ public class BrowserFactory {
     }
 
     public static void quitDriver() {
+        LogsUtil.info("Quitting WebDriver instance for the current thread");
         if (driverThread.get() != null) {
             driverThread.get().quit();
             driverThread.remove();
@@ -116,6 +120,7 @@ public class BrowserFactory {
 
     // Optional: CAPTCHA detection hook
     public static boolean isCaptchaPresent() {
+        LogsUtil.info("Checking for CAPTCHA presence on the page");
         WebDriver driver = getDriver();
         return driver.getPageSource().toLowerCase().contains("captcha");
     }

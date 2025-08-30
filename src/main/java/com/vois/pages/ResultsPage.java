@@ -1,6 +1,7 @@
 package com.vois.pages;
 
 import com.vois.utils.LocatorReaderUtils;
+import com.vois.utils.LogsUtil;
 import com.vois.utils.ValidationUtils;
 import com.vois.utils.WaitUtils;
 import com.vois.utils.actions.BrowserActions;
@@ -26,7 +27,7 @@ public class ResultsPage {
     public boolean validateRelatedSearchSections(String expectedText, int expectedSectionCount) {
         List<WebElement> sections = driver.findElements(relatedSectionsLocator);
         if (sections.isEmpty()) {
-            System.out.println("No related search sections found");
+            LogsUtil.warn("No related search sections found.");
             return false; // No sections found
         }
         int sectionIndex = 0;
@@ -35,7 +36,7 @@ public class ResultsPage {
                 .flatMap(section -> section.findElements(By.xpath(".//li")).stream())
                 .toList();
         for (WebElement item : items) {
-            System.out.println("Item: " + item.getText());
+            LogsUtil.info("Related section item text: " + item.getText());
             if(sectionIndex == expectedSectionCount){
                 return true;
             }
@@ -43,14 +44,17 @@ public class ResultsPage {
                 sectionIndex++;
             }
         }
+        LogsUtil.info("Total related sections matching '" + expectedText + "': " + sectionIndex);
         return false;
     }
 
     public static int getSearchResultsCount(WebDriver driver) {
+        LogsUtil.info("Counting search results on the current page.");
         return WaitUtils.waitForAllElementsVisible(driver, searchResultsLocator).size();
     }
 
     public void goToPage(int pageNumber) {
+        LogsUtil.info("Navigating to page number: " + pageNumber);
         BrowserActions.goToPage(driver, nextPageButtonTemplate, pageNumber);
     }
 }
