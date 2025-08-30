@@ -1,0 +1,6 @@
+{
+  "baseUrl": "https://www.bing.com",
+  "searchKeyword": "Vodafone",
+  "expectedRelatedText": "Vodafone",
+  "expectedRelatedCount": 2
+}

@@ -2,6 +2,7 @@ package com.vois.tests;
 
 import com.vois.pages.HomePage;
 import com.vois.pages.ResultsPage;
+import com.vois.utils.JsonUtils;
 import com.vois.utils.ValidationUtils;
 import com.vois.utils.actions.BrowserActions;
 import org.openqa.selenium.WebDriver;
@@ -17,8 +18,10 @@ public class VodafoneSearchTest {
     private HomePage homePage;
     private ResultsPage resultsPage;
 
-    private static final String BASE_URL = "https://www.bing.com";
-    private static final String SEARCH_KEYWORD = "Vodafone";
+    private static final String BASE_URL = JsonUtils.getTestData("baseUrl");
+    private static final String SEARCH_KEYWORD = JsonUtils.getTestData("searchKeyword");
+    private static final String EXPECTED_RELATED_TEXT = JsonUtils.getTestData("expectedRelatedText");
+    private static final int EXPECTED_RELATED_SECTIONS_COUNT = Integer.parseInt(JsonUtils.getTestData("expectedRelatedCount"));
 
     @BeforeClass
     public void setup() {
@@ -47,7 +50,7 @@ public class VodafoneSearchTest {
         System.out.println("Results found on page 1: " + resultsCount);
         Assert.assertTrue(resultsCount > 0, "No search results found on page 1!");
 
-        boolean relatedSectionsValid = resultsPage.validateRelatedSearchSections(SEARCH_KEYWORD, 2);
+        boolean relatedSectionsValid = resultsPage.validateRelatedSearchSections(EXPECTED_RELATED_TEXT, EXPECTED_RELATED_SECTIONS_COUNT);
         Assert.assertTrue(relatedSectionsValid, "Related search sections validation failed!");
     }
 
