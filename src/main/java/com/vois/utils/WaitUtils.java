@@ -23,6 +23,12 @@ public class WaitUtils {
                 .until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    // Method to wait until all elements are visible
+    public static java.util.List<WebElement> waitForAllElementsVisible(WebDriver driver, By locator) {
+        return new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_WAIT_TIME_SECONDS))
+                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+    }
+
     // Method to wait for an element to be clickable
     public static WebElement waitForElementToBeClickable(WebDriver driver, By locator) {
         return new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_WAIT_TIME_SECONDS))
