@@ -1,5 +1,7 @@
 package com.vois.utils;
 
+import io.qameta.allure.Step;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -12,12 +14,14 @@ public class PropertiesUtils {
         try (FileInputStream fis = new FileInputStream(PROPERTIES_FILE_PATH)) {
             properties.load(fis);
         } catch (IOException e) {
+            LogsUtil.error("Failed to load config.properties: " + e.getMessage());
             throw new RuntimeException("Failed to load config.properties", e);
         }
     }
 
     private PropertiesUtils() {
         // Prevent instantiation
+        LogsUtil.error("Attempted to instantiate PropertiesUtils");
         throw new UnsupportedOperationException("Utility class");
     }
 
@@ -33,9 +37,11 @@ public class PropertiesUtils {
             try {
                 return Integer.parseInt(value);
             } catch (NumberFormatException e) {
+                LogsUtil.error("Property value is not a valid integer: " + value);
                 throw new RuntimeException("Property value is not a valid integer: " + value, e);
             }
         }
+        LogsUtil.error("Property key not found: " + key);
         throw new RuntimeException("Property key not found: " + key);
     }
 }

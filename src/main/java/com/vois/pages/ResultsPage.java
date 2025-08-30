@@ -6,6 +6,7 @@ import com.vois.utils.ValidationUtils;
 import com.vois.utils.WaitUtils;
 import com.vois.utils.actions.BrowserActions;
 import com.vois.utils.actions.ElementActions;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,6 +25,7 @@ public class ResultsPage {
         this.driver = driver;
     }
 
+    @Step("Validate that the related search section have the expected number")
     public boolean validateRelatedSearchSections(String expectedText, int expectedSectionCount) {
         List<WebElement> sections = driver.findElements(relatedSectionsLocator);
         if (sections.isEmpty()) {
@@ -48,11 +50,13 @@ public class ResultsPage {
         return false;
     }
 
+    @Step("Get the count of search results on the current page")
     public static int getSearchResultsCount(WebDriver driver) {
         LogsUtil.info("Counting search results on the current page.");
         return WaitUtils.waitForAllElementsVisible(driver, searchResultsLocator).size();
     }
 
+    @Step("Navigate to page number: {pageNumber}")
     public void goToPage(int pageNumber) {
         LogsUtil.info("Navigating to page number: " + pageNumber);
         BrowserActions.goToPage(driver, nextPageButtonTemplate, pageNumber);

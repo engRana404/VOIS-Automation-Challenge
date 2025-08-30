@@ -1,10 +1,13 @@
 package com.vois.utils;
 
+import io.qameta.allure.Step;
+
 public class JsonUtils {
     private static final String JSON_FILE_PATH = "src/test/resources/searchData.json";
 
     private JsonUtils() {
         // Prevent instantiation
+        LogsUtil.error("Attempted to instantiate JsonUtils");
         throw new UnsupportedOperationException("Utility class");
     }
 
@@ -21,9 +24,11 @@ public class JsonUtils {
             if (jsonObject.has(key)) {
                 data = jsonObject.get(key).getAsString();
             } else {
+                LogsUtil.error("Key not found in JSON: " + key);
                 throw new RuntimeException("Key not found in JSON: " + key);
             }
         } catch (Exception e) {
+            LogsUtil.error("Failed to read JSON file: " + e.getMessage());
             throw new RuntimeException("Failed to read JSON file: " + e.getMessage(), e);
         }
         return data;

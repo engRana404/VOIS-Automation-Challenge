@@ -101,6 +101,7 @@ public class BrowserFactory {
         return driver;
     }
 
+    @Step("Get WebDriver instance for the current thread")
     public static WebDriver getDriver() {
         LogsUtil.info("Retrieving WebDriver instance for the current thread");
         if (driverThread.get() == null) {
@@ -110,6 +111,7 @@ public class BrowserFactory {
         return driverThread.get();
     }
 
+    @Step("Quit WebDriver instance for the current thread")
     public static void quitDriver() {
         LogsUtil.info("Quitting WebDriver instance for the current thread");
         if (driverThread.get() != null) {
