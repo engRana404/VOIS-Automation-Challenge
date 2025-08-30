@@ -22,10 +22,20 @@ public class LocatorReaderUtils {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    public static By getLocator(String page, String elementName) {
+    public static String getLocatorValue(String page, String elementName) {
+        JsonNode node = locators.path(page).path(elementName);
+        return node.path("value").asText();
+    }
+
+    public static By getLocator(String page, String elementName, String... replacements) {
         JsonNode node = locators.path(page).path(elementName);
         String type = node.path("type").asText();
         String value = node.path("value").asText();
+
+        // Replace placeholders if provided
+        for (String replacement : replacements) {
+            value = value.replaceFirst("\\{[^}]+\\}", replacement);
+        }
 
         return switch (type.toLowerCase()) {
             case "id" -> By.id(value);
