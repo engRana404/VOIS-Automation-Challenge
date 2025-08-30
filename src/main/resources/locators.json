@@ -1,0 +1,22 @@
+{
+  "home": {
+    "searchBox": {
+      "type": "name",
+      "value": "q"
+    }
+  },
+  "results": {
+    "relatedSearchSections": {
+      "type": "xpath",
+      "value": "//div[contains(@class,'b_rs')]"
+    },
+    "searchResults": {
+      "type": "xpath",
+      "value": "//li[@class='b_algo']"
+    },
+    "nextPageButton": {
+      "type": "xpath",
+      "value": "//a[@aria-label='Page {pageNumber}']"
+    }
+  }
+}
