@@ -3,10 +3,7 @@ package com.vois.tests;
 import com.vois.drivers.BrowserFactory;
 import com.vois.pages.HomePage;
 import com.vois.pages.ResultsPage;
-import com.vois.utils.JsonUtils;
-import com.vois.utils.LogsUtil;
-import com.vois.utils.PropertiesUtils;
-import com.vois.utils.ValidationUtils;
+import com.vois.utils.*;
 import com.vois.utils.actions.BrowserActions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,6 +25,7 @@ public class VodafoneSearchTest {
 
     @BeforeClass
     public void setup() {
+        AllureUtils.cleanAllureResults();
         LogsUtil.info("Setting up the test environment");
         driver = BrowserFactory.getDriver();
         driver.get(PropertiesUtils.getPropertyValue("baseUrl"));
