@@ -1,5 +1,6 @@
 package com.vois.tests;
 
+import com.vois.drivers.BrowserFactory;
 import com.vois.pages.HomePage;
 import com.vois.pages.ResultsPage;
 import com.vois.utils.JsonUtils;
@@ -26,13 +27,8 @@ public class VodafoneSearchTest {
 
     @BeforeClass
     public void setup() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-blink-features=AutomationControlled");
-        options.addArguments("user-agent=Mozilla/5.0 ..."); // set a real UA if needed
-        driver = new ChromeDriver(options);
-
-        driver.manage().window().maximize();
-
+        driver = BrowserFactory.getDriver();
+        driver.get(PropertiesUtils.getPropertyValue("baseUrl"));
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
     }
@@ -73,6 +69,6 @@ public class VodafoneSearchTest {
 
     @AfterClass
     public void teardown() {
-        BrowserActions.closeBrowser(driver);
+        BrowserFactory.quitDriver();
     }
 }
