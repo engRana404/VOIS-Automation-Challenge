@@ -7,8 +7,8 @@
   },
   "results": {
     "relatedSearchSections": {
-      "type": "xpath",
-      "value": "//div[contains(@class,'b_rs')]"
+      "type": "css",
+      "value": "div.b_rs"
     },
     "searchResults": {
       "type": "xpath",

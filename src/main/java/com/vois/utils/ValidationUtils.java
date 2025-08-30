@@ -31,9 +31,7 @@ public class ValidationUtils {
     /**
      * Compares the number of elements located by two locators.
      */
-    public static boolean compareElementCounts(WebDriver driver, By locator1, By locator2) {
-        int count1 = ElementActions.getSectionsCount(driver, locator1);
-        int count2 = ElementActions.getSectionsCount(driver, locator2);
+    public static boolean compareElementCounts(WebDriver driver, int count1, int count2) {
         return count1 == count2;
     }
 

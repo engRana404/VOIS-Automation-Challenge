@@ -2,12 +2,11 @@ package com.vois.tests;
 
 import com.vois.pages.HomePage;
 import com.vois.pages.ResultsPage;
+import com.vois.utils.ValidationUtils;
 import com.vois.utils.actions.BrowserActions;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -40,9 +39,6 @@ public class VodafoneSearchTest {
 
         // Perform search
         homePage.search(SEARCH_KEYWORD);
-
-        // Safety net in case submit() doesn’t trigger immediately
-        new Actions(driver).sendKeys(Keys.ENTER).perform();
     }
 
     @Test(priority = 2, dependsOnMethods = "searchForVodafone")
@@ -50,6 +46,9 @@ public class VodafoneSearchTest {
         int resultsCount = resultsPage.getSearchResultsCount(driver);
         System.out.println("Results found on page 1: " + resultsCount);
         Assert.assertTrue(resultsCount > 0, "No search results found on page 1!");
+
+        boolean relatedSectionsValid = resultsPage.validateRelatedSearchSections(SEARCH_KEYWORD, 2);
+        Assert.assertTrue(relatedSectionsValid, "Related search sections validation failed!");
     }
 
     @Test(priority = 3, dependsOnMethods = "validateFirstPageHasResults")
@@ -57,13 +56,15 @@ public class VodafoneSearchTest {
         resultsPage.goToPage(2);
         int page2Count = resultsPage.getSearchResultsCount(driver);
         System.out.println("Results found on page 2: " + page2Count);
+        Assert.assertTrue(page2Count > 0, "No search results found on page 2!");
 
         resultsPage.goToPage(3);
         int page3Count = resultsPage.getSearchResultsCount(driver);
         System.out.println("Results found on page 3: " + page3Count);
+        Assert.assertTrue(page3Count > 0, "No search results found on page 3!");
 
-        Assert.assertTrue(page2Count > 0, "Page 2 should have results!");
-        Assert.assertTrue(page3Count > 0, "Page 3 should have results!");
+        boolean resultCount = ValidationUtils.compareElementCounts(driver, page2Count, page3Count);
+        Assert.assertTrue(resultCount, "Search results count on page 2 and 3 do not match!");
     }
 
     @AfterClass
