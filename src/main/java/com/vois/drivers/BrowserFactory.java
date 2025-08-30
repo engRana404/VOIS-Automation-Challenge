@@ -56,7 +56,11 @@ public class BrowserFactory {
                 edgeOptions.setExperimentalOption("useAutomationExtension", false);
                 edgeOptions.setCapability("ms:edgeOptions", Map.of("args", List.of("--disable-blink-features=AutomationControlled")));
                 if (!PropertiesUtils.getPropertyValue("executionType").equalsIgnoreCase("Local")) {
-                    edgeOptions.addArguments("--headless=new", "--disable-gpu", "--window-size=1920,1080");
+                    edgeOptions.addArguments("--headless=new");
+                    edgeOptions.addArguments("--disable-gpu");
+                    edgeOptions.addArguments("--window-size=1920,1080");
+                    edgeOptions.addArguments("--disable-blink-features=AutomationControlled"); // Avoid detection
+                    edgeOptions.addArguments("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"); // Fake user-agent
                 }
                 driver = new EdgeDriver(edgeOptions);
                 ((EdgeDriver) driver).executeCdpCommand("Page.addScriptToEvaluateOnNewDocument",
