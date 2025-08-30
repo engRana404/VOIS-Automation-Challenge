@@ -9,9 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class VodafoneSearchTest {
     private WebDriver driver;
@@ -26,6 +24,7 @@ public class VodafoneSearchTest {
     @BeforeClass
     public void setup() {
         AllureUtils.cleanAllureResults();
+        ScreenShotUtils.cleanScreenshots();
         LogsUtil.info("Setting up the test environment");
         driver = BrowserFactory.getDriver();
         driver.get(PropertiesUtils.getPropertyValue("baseUrl"));
@@ -67,6 +66,11 @@ public class VodafoneSearchTest {
         LogsUtil.info("Validate that page 2 and page 3 results count match");
         boolean resultCount = ValidationUtils.compareElementCounts(driver, page2Count, page3Count);
         Assert.assertTrue(resultCount, "Search results count on page 2 and 3 do not match!");
+    }
+
+    @AfterMethod
+    public void afterTest() {
+        ScreenShotUtils.takeScreenshot(driver, "screenshoot.png");
     }
 
     @AfterClass
