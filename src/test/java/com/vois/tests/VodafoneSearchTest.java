@@ -10,8 +10,6 @@ import io.qameta.allure.*;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
-import io.qameta.allure.Allure;
 
 @Epic("Search Engine Validation")
 @Feature("Bing Search Functionality")
@@ -30,14 +28,12 @@ public class VodafoneSearchTest {
     private static final String EXPECTED_RELATED_TEXT = JsonUtils.getTestData("expectedRelatedText");
     private static final int EXPECTED_RELATED_SECTIONS_COUNT = Integer.parseInt(JsonUtils.getTestData("expectedRelatedCount"));
 
-    SoftAssert softAssert = new SoftAssert();
-
     @BeforeClass(alwaysRun = true)
     public void setup() {
         LogsUtil.info("Setting up the test environment");
 
         driver = DriverManager.createInstance();
-        driver.get(BASE_URL);
+        BrowserActions.navigateTo(driver, BASE_URL);
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
     }
@@ -119,7 +115,7 @@ public class VodafoneSearchTest {
         Allure.addAttachment("Page Source - Page 3", "text/html", driver.getPageSource(), "html");
 
         //Soft assertion to allow test continuation
-        softAssert.assertTrue(page3Count >= 8 && page3Count <= 10,
+        Assert.assertTrue(page3Count >= 8 && page3Count <= 10,
                 "Expected around 9 results on page 3 but found " + page3Count);
     }
 
