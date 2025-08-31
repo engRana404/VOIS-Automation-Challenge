@@ -1,7 +1,6 @@
 package com.vois.tests;
 
-import com.vois.drivers.BrowserFactory;
-import com.vois.drivers.DriverManger;
+import com.vois.drivers.DriverManager;
 import com.vois.listeners.TestNGListeners;
 import com.vois.pages.HomePage;
 import com.vois.pages.ResultsPage;
@@ -13,8 +12,6 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import io.qameta.allure.Allure;
-
-import java.lang.reflect.Method;
 
 @Epic("Search Engine Validation")
 @Feature("Bing Search Functionality")
@@ -39,7 +36,7 @@ public class VodafoneSearchTest {
     public void setup() {
         LogsUtil.info("Setting up the test environment");
 
-        driver = DriverManger.createInstance();
+        driver = DriverManager.createInstance();
         driver.get(BASE_URL);
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
@@ -143,6 +140,6 @@ public class VodafoneSearchTest {
     @AfterClass(alwaysRun = true)
     public void teardown() {
         LogsUtil.info("Close Browser");
-        DriverManger.quitDriver();
+        DriverManager.quitDriver();
     }
 }

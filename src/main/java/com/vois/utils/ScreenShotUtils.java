@@ -1,6 +1,6 @@
 package com.vois.utils;
 
-import com.vois.drivers.DriverManger;
+import com.vois.drivers.DriverManager;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
@@ -20,11 +20,11 @@ public class ScreenShotUtils {
     }
 
     public static void takeScreenshot(String fileName) {
-        if (DriverManger.getDriver() == null) {
+        if (DriverManager.getDriver() == null) {
             LogsUtil.error("WebDriver is null. Cannot take screenshot.");
             return;
         }
-        WebDriver driver = DriverManger.getDriver();
+        WebDriver driver = DriverManager.getDriver();
         LogsUtil.info("Taking screenshot and saving to: " + filePath + "/" + fileName);
         File src = ((TakesScreenshot) driver).getScreenshotAs(FILE);
         try {

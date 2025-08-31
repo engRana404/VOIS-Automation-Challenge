@@ -7,11 +7,11 @@ import org.openqa.selenium.WebDriver;
 
 import static org.testng.Assert.fail;
 
-public class DriverManger {
+public class DriverManager {
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
     private static final String BrowserType = PropertiesUtils.getPropertyValue("browserType");
 
-    private DriverManger() {
+    private DriverManager() {
         super();
     }
 
