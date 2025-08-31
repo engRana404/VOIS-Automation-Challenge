@@ -1,9 +1,11 @@
 package com.vois.utils;
 
+import com.vois.drivers.DriverManger;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
+import java.sql.DriverManager;
 
 import static org.openqa.selenium.OutputType.FILE;
 import static org.openqa.selenium.io.FileHandler.copy;
@@ -18,7 +20,12 @@ public class ScreenShotUtils {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    public static void takeScreenshot(WebDriver driver, String fileName) {
+    public static void takeScreenshot(String fileName) {
+        if (DriverManger.getDriver() == null) {
+            LogsUtil.error("WebDriver is null. Cannot take screenshot.");
+            return;
+        }
+        WebDriver driver = DriverManger.getDriver();
         LogsUtil.info("Taking screenshot and saving to: " + filePath + "/" + fileName);
         File src = ((TakesScreenshot) driver).getScreenshotAs(FILE);
         try {

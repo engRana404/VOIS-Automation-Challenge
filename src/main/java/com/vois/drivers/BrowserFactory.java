@@ -22,7 +22,7 @@ public class BrowserFactory {
     }
 
     @Step("Create driver instance for browser: {browserType}")
-    private static WebDriver createDriver(String browserType) {
+    public static WebDriver createDriver(String browserType) {
         LogsUtil.info("Creating WebDriver instance for browser: " + browserType);
         WebDriver driver;
 
@@ -101,29 +101,29 @@ public class BrowserFactory {
         return driver;
     }
 
-    @Step("Get WebDriver instance for the current thread")
-    public static WebDriver getDriver() {
-        LogsUtil.info("Retrieving WebDriver instance for the current thread");
-        if (driverThread.get() == null) {
-            String browserType = PropertiesUtils.getPropertyValue("browserType");
-            driverThread.set(createDriver(browserType));
-        }
-        return driverThread.get();
-    }
+// /*    @Step("Get WebDriver instance for the current thread")
+//    public static WebDriver getDriver() {
+//        LogsUtil.info("Retrieving WebDriver instance for the current thread");
+//        if (driverThread.get() == null) {
+//            String browserType = PropertiesUtils.getPropertyValue("browserType");
+//            driverThread.set(createDriver(browserType));
+//        }
+//        return driverThread.get();
+//    }*/
 
-    @Step("Quit WebDriver instance for the current thread")
+/*    @Step("Quit WebDriver instance for the current thread")
     public static void quitDriver() {
         LogsUtil.info("Quitting WebDriver instance for the current thread");
         if (driverThread.get() != null) {
             driverThread.get().quit();
             driverThread.remove();
         }
-    }
+    }*/
 
     // Optional: CAPTCHA detection hook
     public static boolean isCaptchaPresent() {
         LogsUtil.info("Checking for CAPTCHA presence on the page");
-        WebDriver driver = getDriver();
+        WebDriver driver = DriverManger.getDriver();
         return driver.getPageSource().toLowerCase().contains("captcha");
     }
 }
