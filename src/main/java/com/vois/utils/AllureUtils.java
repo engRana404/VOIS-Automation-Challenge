@@ -2,7 +2,6 @@ package com.vois.utils;
 
 import io.qameta.allure.Allure;
 
-import java.io.ByteArrayInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -18,7 +17,7 @@ public class AllureUtils {
         LogsUtil.info("Cleaned Allure results directory.");
     }
 
-    public static void attatchScreenshot(String screenshotName, String screenshotPath) {
+    public static void attachScreenshot(String screenshotName, String screenshotPath) {
         LogsUtil.info("Attaching screenshot to Allure report: " + screenshotName);
         try {
             Allure.addAttachment(screenshotName, Files.newInputStream(Path.of(screenshotPath)));

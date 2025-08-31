@@ -5,7 +5,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;
-import java.sql.DriverManager;
 
 import static org.openqa.selenium.OutputType.FILE;
 import static org.openqa.selenium.io.FileHandler.copy;
@@ -33,7 +32,7 @@ public class ScreenShotUtils {
             createDir(new File(filePath));
             copy(src, dest);
             LogsUtil.info("Screenshot saved successfully: " + dest.getAbsolutePath());
-            AllureUtils.attatchScreenshot("Screenshot - " + fileName, dest.getAbsolutePath());
+            AllureUtils.attachScreenshot("Screenshot - " + fileName, dest.getAbsolutePath());
         } catch (Exception e) {
             LogsUtil.error("Failed to save screenshot: " + e.getMessage());
         }
