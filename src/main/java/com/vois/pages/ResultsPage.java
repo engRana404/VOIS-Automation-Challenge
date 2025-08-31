@@ -52,8 +52,21 @@ public class ResultsPage {
 
     @Step("Get the count of search results on the current page")
     public static int getSearchResultsCount(WebDriver driver) {
-        LogsUtil.info("Counting search results on the current page.");
-        return WaitUtils.waitForAllElementsVisible(driver, searchResultsLocator).size();
+        LogsUtil.info("Counting organic search results on the current page.");
+
+        // Wait for visibility
+        List<WebElement> results = WaitUtils.waitForAllElementsVisible(driver, searchResultsLocator);
+
+        // Filter out any rich media injected into b_algo
+        int count = 0;
+        for (WebElement result : results) {
+            String text = result.getText().toLowerCase();
+            if (!text.contains("video") && !text.contains("image") && !text.contains("map")) {
+                count++;
+            }
+        }
+        LogsUtil.info("Organic result count (excluding media): " + count);
+        return count;
     }
 
     @Step("Navigate to page number: {pageNumber}")
