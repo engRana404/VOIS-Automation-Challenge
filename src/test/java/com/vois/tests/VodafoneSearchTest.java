@@ -12,6 +12,9 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import io.qameta.allure.Allure;
+
+import java.lang.reflect.Method;
 
 @Epic("Search Engine Validation")
 @Feature("Bing Search Functionality")
@@ -32,12 +35,6 @@ public class VodafoneSearchTest {
 
     SoftAssert softAssert = new SoftAssert();
 
-    @BeforeSuite(alwaysRun = true)
-    public void cleanAllure() {
-        AllureUtils.cleanAllureResults();
-        ScreenShotUtils.cleanScreenshots();
-    }
-
     @BeforeClass(alwaysRun = true)
     public void setup() {
         LogsUtil.info("Setting up the test environment");
@@ -46,12 +43,14 @@ public class VodafoneSearchTest {
         driver.get(BASE_URL);
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
+    }
 
-        // Parameters show up in Allure Environment
+/*    @BeforeMethod(alwaysRun = true)
+    public void beforeMethod(Method method) {
         Allure.parameter("Browser", PropertiesUtils.getPropertyValue("browser"));
         Allure.parameter("Base URL", BASE_URL);
         Allure.parameter("OS", System.getProperty("os.name"));
-    }
+    }*/
 
     @Test(priority = 1, groups = {"search"})
     @Description("Test to validate search functionality, related searches, and pagination on Bing")
@@ -139,11 +138,6 @@ public class VodafoneSearchTest {
 
         Assert.assertEquals(page2Count, page3Count,
                 "Search results count on page 2 and 3 do not match!");
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void afterTest() {
-        //ScreenShotUtils.takeScreenshot("screenshoot.png");
     }
 
     @AfterClass(alwaysRun = true)
