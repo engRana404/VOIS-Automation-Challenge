@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Bing Suite" parallel="classes" thread-count="4">
+    <test name="Bing Tests">
+        <classes>
+            <class name="com.vois.tests.SearchTest"/>
+            <class name="com.vois.tests.RelatedSearchTest"/>
+            <class name="com.vois.tests.PaginationTest"/>
+            <class name="com.vois.tests.ComparisonTest"/>
+        </classes>
+    </test>
+</suite>
