@@ -33,6 +33,7 @@ public final class ElementActions {
     public static WebElement clickElement(WebDriver driver, By locator) {
         LogsUtil.info("Clicking on element: " + locator.toString());
         WebElement element = WaitUtils.waitForElementToBeClickable(driver, locator);
+        Scrolling.scrollToElement(driver, locator);
         element.click();
         return element;
     }
@@ -41,6 +42,7 @@ public final class ElementActions {
     public static void sendKeys(WebDriver driver, By locator, String text) {
         LogsUtil.info("Sending keys to element: " + locator.toString() + " with text: " + text);
         WebElement element = WaitUtils.waitForElementToBeVisible(driver, locator);
+        Scrolling.scrollToElement(driver, locator);
         element.clear();
         element.sendKeys(text);
     }
