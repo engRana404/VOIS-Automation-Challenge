@@ -46,13 +46,13 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         if (method.isTestMethod()) {
             switch (testResult.getStatus()) {
                 case ITestResult.SUCCESS:
-                    ScreenShotUtils.takeScreenshot("passed-" + testResult.getName());
+                    ScreenShotUtils.takeScreenshot("passed-" + testResult.getName() + ".png");
                     break;
                 case ITestResult.FAILURE:
-                    ScreenShotUtils.takeScreenshot("failed-" + testResult.getName());
+                    ScreenShotUtils.takeScreenshot("failed-" + testResult.getName() + ".png");
                     break;
                 case ITestResult.SKIP:
-                    ScreenShotUtils.takeScreenshot("skipped-" + testResult.getName());
+                    ScreenShotUtils.takeScreenshot("skipped-" + testResult.getName() + ".png");
                     break;
                 default:
                     LogsUtil.warn(threadInfo() + "Test method " + testResult.getName() + " finished with status: " + testResult.getStatus());
