@@ -6,10 +6,21 @@ on:
       - main
       - master
   pull_request:
+    branches:
+      - main
+      - master
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sundays at midnight
+  workflow_dispatch:
+
+env:
+  TARGET: "%regex[.*Test.*],com.vois.tests.**.**,com.vois.tests.**"
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
 
     steps:
       - name: Checkout repo
@@ -22,8 +33,15 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run tests with Maven
-        run: mvn clean test
+      - name: Set up Maven
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Tests
+        run: mvn -Dtest="${TARGET}" -DexecutionType="LocalHeadless" -Dbrowser="Chrome" clean test
 
       - name: Generate Allure Report
         run: mvn allure:report
@@ -32,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: target/allure-results
+          path: allure-results
 
       - name: Upload Allure Report
         uses: actions/upload-artifact@v4
