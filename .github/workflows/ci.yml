@@ -17,8 +17,27 @@ env:
   TARGET: "regex[.*Test.*],com.vois.tests.**.**,com.vois.tests.**"
 
 jobs:
-  Chrome_Linux_Tests:
-    runs-on: ubuntu-latest
+  Browser_Tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - browser: Chrome
+            os: ubuntu-latest
+            shell: bash
+            report_name: Chrome_Linux_Report
+
+          - browser: Firefox
+            os: ubuntu-latest
+            shell: bash
+            report_name: Firefox_Linux_Report
+
+          - browser: Edge
+            os: windows-latest
+            shell: pwsh
+            report_name: Edge_Windows_Report
+
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 60
 
     steps:
@@ -33,78 +52,22 @@ jobs:
           cache: maven
 
       - name: Print Test Classes
+        shell: ${{ matrix.shell }}
         run: |
           echo "Test classes to be executed:"
-          grep '<class name=' testng.xml
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            Select-String -Path testng.xml -Pattern '<class name='
+          else
+            grep '<class name=' testng.xml
+          fi
 
       - name: Run Tests
         continue-on-error: true
-        run: mvn -Dtest="$TARGET" -DexecutionType="LocalHeadless" -Dbrowser="Chrome" clean test
+        run: mvn -Dtest="$TARGET" -DexecutionType="LocalHeadless" -Dbrowser="${{ matrix.browser }}" clean test
 
       - name: Upload Allure Results
         uses: actions/upload-artifact@v4
         with:
-          name: Chrome_Linux_Report
+          name: ${{ matrix.report_name }}
           path: "test-output/reports/*.html"
-
-  Firefox_Linux_Tests:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Print Test Classes
-        run: |
-          echo "Test classes to be executed:"
-          grep '<class name=' testng.xml
-
-      - name: Run Tests
-        continue-on-error: true
-        run: mvn -Dtest="$TARGET" -DexecutionType="LocalHeadless" -Dbrowser="Firefox" clean test
-
-      - name: Upload Allure Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: Firefox_Linux_Report
-          path: "test-output/reports/*.html"
-
-
-  Edge_Windows_Tests:
-    runs-on: windows-latest
-    timeout-minutes: 60
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Print Test Classes
-        run: |
-          echo "Test classes to be executed:"
-          Select-String -Path testng.xml -Pattern '<class name='
-
-      - name: Run Tests
-        continue-on-error: true
-        run: mvn -Dtest="$TARGET" -DexecutionType="LocalHeadless" -Dbrowser="Edge" clean test
-
-      - name: Upload Allure Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: Edge_Windows_Report
-          path: "test-output/reports/*.html"
-
+          if-no-files-found: ignore
