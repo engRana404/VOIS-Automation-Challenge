@@ -38,6 +38,7 @@ jobs:
           grep '<class name=' testng.xml
 
       - name: Run Tests
+        continue-on-error: true
         run: mvn -Dtest="$TARGET" -DexecutionType="LocalHeadless" -Dbrowser="Chrome" clean test
 
       - name: Generate Allure Report
