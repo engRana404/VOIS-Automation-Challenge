@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 env:
-  TARGET: "%regex[.*Test.*],com.vois.tests.**.**,com.vois.tests.**"
+  TARGET: "regex[.*Test.*],com.vois.tests.**.**,com.vois.tests.**"
 
 jobs:
   test:
@@ -31,15 +31,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Set up Maven
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
       - name: Run Tests
-        run: mvn -Dtest="${TARGET}" -DexecutionType="LocalHeadless" -Dbrowser="Chrome" clean test
+        run: mvn -Dtest="$TARGET" -DexecutionType="LocalHeadless" -Dbrowser="Chrome" clean test
 
       - name: Generate Allure Report
         run: mvn allure:report
