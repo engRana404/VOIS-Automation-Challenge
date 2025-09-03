@@ -9,7 +9,7 @@ import static org.testng.Assert.fail;
 
 public class DriverManager {
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
-    private static final String browserType = PropertiesUtils.getPropertyValue("browserType");
+    private static final String browserType = System.getProperty("browser", PropertiesUtils.getPropertyValue("browserType"));
 
     private DriverManager() {
         super();

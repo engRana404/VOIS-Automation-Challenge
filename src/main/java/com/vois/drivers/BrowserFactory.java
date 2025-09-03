@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BrowserFactory {
+    private static final String excutionType = System.getProperty("executionType", PropertiesUtils.getPropertyValue("executionType"));
 
     private BrowserFactory() {
         super();
@@ -35,7 +36,7 @@ public class BrowserFactory {
                 //chromeOptions.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
                 chromeOptions.setExperimentalOption("useAutomationExtension", false);
 
-                if (!PropertiesUtils.getPropertyValue("executionType").equalsIgnoreCase("Local")) {
+                if (!excutionType.equalsIgnoreCase("Local")) {
                     chromeOptions.addArguments("--headless=new", "--disable-gpu", "--window-size=1920,1080");
                 }
 
@@ -55,7 +56,7 @@ public class BrowserFactory {
                 edgeOptions.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
                 edgeOptions.setExperimentalOption("useAutomationExtension", false);
                 edgeOptions.setCapability("ms:edgeOptions", Map.of("args", List.of("--disable-blink-features=AutomationControlled")));
-                if (!PropertiesUtils.getPropertyValue("executionType").equalsIgnoreCase("Local")) {
+                if (!excutionType.equalsIgnoreCase("Local")) {
                     edgeOptions.addArguments("--headless=new");
                     edgeOptions.addArguments("--disable-gpu");
                     edgeOptions.addArguments("--window-size=1920,1080");
@@ -71,7 +72,7 @@ public class BrowserFactory {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.setAcceptInsecureCerts(true);
-                if (!PropertiesUtils.getPropertyValue("executionType").equalsIgnoreCase("Local")) {
+                if (!excutionType.equalsIgnoreCase("Local")) {
                     firefoxOptions.addArguments("--headless");
                 }
 
