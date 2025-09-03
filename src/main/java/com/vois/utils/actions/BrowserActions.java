@@ -30,6 +30,13 @@ public class BrowserActions {
         return driver.getCurrentUrl();
     }
 
+    @Step("Get page source")
+    //Get page source
+    public static String getPageSource(WebDriver driver) {
+        LogsUtil.info("Getting page source");
+        return driver.getPageSource();
+    }
+
     @Step("Get page title: {title}")
     //Get page title
     public static String getPageTitle(WebDriver driver) {
