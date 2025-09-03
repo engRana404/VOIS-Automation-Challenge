@@ -1,5 +1,6 @@
 {
   "searchKeyword": "Vodafone",
   "expectedRelatedText": "Vodafone",
-  "expectedRelatedCount": 2
+  "expectedRelatedCount": 2,
+  "expectedTitle": "Vodafone - Search"
 }

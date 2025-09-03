@@ -8,7 +8,6 @@ import com.vois.utils.*;
 import com.vois.utils.actions.BrowserActions;
 import io.qameta.allure.*;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 @Epic("Search Engine Validation")
@@ -18,12 +17,9 @@ import org.testng.annotations.*;
 @Listeners(TestNGListeners.class)
 public class VodafoneSearchTest {
     private WebDriver driver;
-    private HomePage homePage;
-    private ResultsPage resultsPage;
-    private int page2Count;
-    private int page3Count;
 
     private static final String SEARCH_KEYWORD = JsonUtils.getTestData("searchKeyword");
+    private static final String EXPECTED_TITLE = JsonUtils.getTestData("expectedTitle");
     private static final String EXPECTED_RELATED_TEXT = JsonUtils.getTestData("expectedRelatedText");
     private static final int EXPECTED_RELATED_SECTIONS_COUNT = Integer.parseInt(JsonUtils.getTestData("expectedRelatedCount"));
 
@@ -32,9 +28,6 @@ public class VodafoneSearchTest {
         LogsUtil.info("Setting up the test environment");
 
         driver = DriverManager.createInstance();
-
-        homePage = new HomePage(driver);
-        resultsPage = new ResultsPage(driver);
     }
 
 /*    @BeforeMethod(alwaysRun = true)
@@ -50,9 +43,12 @@ public class VodafoneSearchTest {
     @Link(name = "Bing Search Docs", url = "https://learn.microsoft.com/en-us/bing/search-apis/")
     @Issue("QA-100")
     public void searchForVodafone() {
-        homePage.search(SEARCH_KEYWORD);
+        new HomePage(driver)
+                .navigateToHomePage()
+                .search(SEARCH_KEYWORD)
+                .validatePageTitle(EXPECTED_TITLE);
 
-        Allure.addAttachment("Current URL after search", driver.getCurrentUrl());
+        Allure.addAttachment("Current URL after search", BrowserActions.getCurrentUrl(driver));
     }
 
     @Test(priority = 2, dependsOnGroups = {"search"}, groups = {"search"})
@@ -60,12 +56,10 @@ public class VodafoneSearchTest {
     @Severity(SeverityLevel.CRITICAL)
     @Issue("QA-101")
     public void validateFirstPageHasResults() {
-        int resultsCount = resultsPage.getSearchResultsCount(driver);
-        LogsUtil.info("Results found on page 1: " + resultsCount);
+        new ResultsPage(driver)
+                .validatePageHasResults();
 
-        Allure.addAttachment("Page Source - Page 1", "text/html", driver.getPageSource(), "html");
-
-        Assert.assertTrue(resultsCount > 0, "No search results found on page 1!");
+        Allure.addAttachment("Page Source - Page 1", "text/html", BrowserActions.getPageSource(driver), "html");
     }
 
     @Test(priority = 3, dependsOnGroups = {"search"}, groups = {"related"})
@@ -75,15 +69,11 @@ public class VodafoneSearchTest {
     public void validateRelatedSearchSections() {
         LogsUtil.info("Validating related search sections");
 
-        boolean relatedSectionsValid = resultsPage.validateRelatedSearchSections(
-                EXPECTED_RELATED_TEXT,
-                EXPECTED_RELATED_SECTIONS_COUNT
-        );
-
-        Allure.addAttachment("Related Section Check", String.valueOf(relatedSectionsValid));
-
-        Assert.assertTrue(relatedSectionsValid,
-                "Related search sections validation failed!");
+        new ResultsPage(driver)
+                .validateRelatedSearchSections(
+                    EXPECTED_RELATED_TEXT,
+                    EXPECTED_RELATED_SECTIONS_COUNT
+                );
     }
 
     @Test(priority = 4, dependsOnGroups = {"search"}, groups = {"pagination"})
@@ -91,14 +81,11 @@ public class VodafoneSearchTest {
     @Severity(SeverityLevel.CRITICAL)
     @Issue("QA-103")
     public void validateSecondPageHasResults() {
-        resultsPage.goToPage(2);
-        page2Count = resultsPage.getSearchResultsCount(driver);
-        LogsUtil.info("Results found on page 2: " + page2Count);
+        new ResultsPage(driver)
+                .goToPage(2)
+                .validatePageHasResults();
 
-        Allure.addAttachment("Page Source - Page 2", "text/html", driver.getPageSource(), "html");
-
-        Assert.assertTrue(page2Count >= 8 && page2Count <= 10,
-                "Expected around 9 results on page 2 but found " + page2Count);
+        Allure.addAttachment("Page Source - Page 2", "text/html", BrowserActions.getPageSource(driver), "html");
     }
 
     @Test(priority = 5, dependsOnGroups = {"pagination"}, groups = {"pagination"})
@@ -106,15 +93,11 @@ public class VodafoneSearchTest {
     @Severity(SeverityLevel.CRITICAL)
     @Issue("QA-104")
     public void validateThirdPageHasResults() {
-        resultsPage.goToPage(3);
-        page3Count = resultsPage.getSearchResultsCount(driver);
-        LogsUtil.info("Results found on page 3: " + page3Count);
+        new ResultsPage(driver)
+                .goToPage(3)
+                .validatePageHasResults();
 
-        Allure.addAttachment("Page Source - Page 3", "text/html", driver.getPageSource(), "html");
-
-        //Soft assertion to allow test continuation
-        Assert.assertTrue(page3Count >= 8 && page3Count <= 10,
-                "Expected around 9 results on page 3 but found " + page3Count);
+        Allure.addAttachment("Page Source - Page 3", "text/html", BrowserActions.getPageSource(driver), "html");
     }
 
     @Test(priority = 6, dependsOnGroups = {"pagination"}, groups = {"comparison"})
@@ -124,11 +107,8 @@ public class VodafoneSearchTest {
     public void validateSearchResultsAcrossPages() {
         LogsUtil.info("Validate that page 2 and page 3 results count match");
 
-        Allure.addAttachment("Comparison",
-                "Page 2 Count = " + page2Count + ", Page 3 Count = " + page3Count);
-
-        Assert.assertEquals(page2Count, page3Count,
-                "Search results count on page 2 and 3 do not match!");
+        new ResultsPage(driver)
+                .validateSearchResultsAcrossTwoPages(2, 3);
     }
 
     @AfterClass(alwaysRun = true)
