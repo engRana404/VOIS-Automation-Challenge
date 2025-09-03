@@ -104,6 +104,10 @@ public class BrowserFactory {
     // Optional: CAPTCHA detection hook
     public static boolean isCaptchaPresent() {
         LogsUtil.info("Checking for CAPTCHA presence on the page");
+        if (!DriverManager.isDriverInitialized()) {
+            LogsUtil.warn("WebDriver is not initialized. Cannot check for CAPTCHA.");
+            return false;
+        }
         WebDriver driver = DriverManager.getDriver();
         return driver.getPageSource().toLowerCase().contains("captcha");
     }

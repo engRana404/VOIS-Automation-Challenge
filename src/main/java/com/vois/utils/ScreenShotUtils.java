@@ -20,8 +20,8 @@ public class ScreenShotUtils {
     }
 
     public static void takeScreenshot(String fileName) {
-        if (DriverManager.getDriver() == null) {
-            LogsUtil.error("WebDriver is null. Cannot take screenshot.");
+        if (!DriverManager.isDriverInitialized()) {
+            LogsUtil.error("WebDriver is not initialized. Cannot take screenshot.");
             return;
         }
         WebDriver driver = DriverManager.getDriver();

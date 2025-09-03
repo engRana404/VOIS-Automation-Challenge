@@ -60,4 +60,8 @@ public class DriverManager {
             LogsUtil.warn(threadInfo() + " No driver found to quit");
         }
     }
+
+    public static boolean isDriverInitialized() {
+        return driverThreadLocal.get() != null;
+    }
 }
