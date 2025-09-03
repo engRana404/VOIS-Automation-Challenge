@@ -30,15 +30,8 @@ public class VodafoneSearchTest {
         driver = DriverManager.createInstance();
     }
 
-/*    @BeforeMethod(alwaysRun = true)
-    public void beforeMethod(Method method) {
-        Allure.parameter("Browser", PropertiesUtils.getPropertyValue("browser"));
-        Allure.parameter("Base URL", BASE_URL);
-        Allure.parameter("OS", System.getProperty("os.name"));
-    }*/
-
     @Test(priority = 1, groups = {"search"})
-    @Description("Test to validate search functionality, related searches, and pagination on Bing")
+    @Description("Test to validate search functionality on Bing")
     @Severity(SeverityLevel.BLOCKER)
     @Link(name = "Bing Search Docs", url = "https://learn.microsoft.com/en-us/bing/search-apis/")
     @Issue("QA-100")
