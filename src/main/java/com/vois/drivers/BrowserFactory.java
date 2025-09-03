@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BrowserFactory {
-    private static final String excutionType = System.getProperty("executionType", PropertiesUtils.getPropertyValue("executionType"));
+    private static final String excutionType = PropertiesUtils.getExecutionType();
 
     private BrowserFactory() {
         super();
@@ -92,7 +92,7 @@ public class BrowserFactory {
                 throw new IllegalArgumentException("Unsupported browser type: " + browserType);
         }
 
-        long timeout = Long.parseLong(PropertiesUtils.getPropertyValue("timeout"));
+        long timeout = PropertiesUtils.getTimeout();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(timeout));
         driver.manage().window().maximize();
