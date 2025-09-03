@@ -25,7 +25,6 @@ public class PaginationTest {
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
 
-        BrowserActions.navigateTo(driver, BASE_URL);
         homePage.search(SEARCH_KEYWORD);
     }
 

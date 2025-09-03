@@ -33,7 +33,7 @@ public class VodafoneSearchTest {
         LogsUtil.info("Setting up the test environment");
 
         driver = DriverManager.createInstance();
-        BrowserActions.navigateTo(driver, BASE_URL);
+
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
     }

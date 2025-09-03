@@ -16,7 +16,7 @@ public class SearchTest {
     private HomePage homePage;
     private ResultsPage resultsPage;
 
-    private static final String BASE_URL = PropertiesUtils.getPropertyValue("baseUrl");
+
     private static final String SEARCH_KEYWORD = JsonUtils.getTestData("searchKeyword");
 
     @BeforeMethod(alwaysRun = true)
@@ -25,7 +25,6 @@ public class SearchTest {
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
 
-        BrowserActions.navigateTo(driver, BASE_URL);
         homePage.search(SEARCH_KEYWORD);
     }
 

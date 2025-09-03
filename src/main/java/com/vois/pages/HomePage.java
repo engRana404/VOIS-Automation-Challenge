@@ -2,6 +2,7 @@ package com.vois.pages;
 
 import com.vois.utils.LocatorReaderUtils;
 import com.vois.utils.LogsUtil;
+import com.vois.utils.PropertiesUtils;
 import com.vois.utils.actions.BrowserActions;
 import com.vois.utils.actions.ElementActions;
 import io.qameta.allure.Step;
@@ -12,8 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class HomePage {
-
     private WebDriver driver;
+    private static final String BASE_URL = PropertiesUtils.getPropertyValue("baseUrl");
 
     // Locators
     private static final By searchBox = LocatorReaderUtils.getLocator("home", "searchBox");
@@ -25,6 +26,7 @@ public class HomePage {
     // Convenience method: perform a search in one step
     @Step("Search for keyword: {keyword}")
     public void search(String keyword) {
+        BrowserActions.navigateTo(driver, BASE_URL);
         LogsUtil.info("Performing search for: " + keyword);
         WebElement box = driver.findElement(searchBox);
         box.sendKeys(keyword);
