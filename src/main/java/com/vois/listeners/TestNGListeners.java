@@ -6,11 +6,8 @@ import com.vois.utils.PropertiesUtils;
 import com.vois.utils.ScreenShotUtils;
 import io.qameta.allure.Allure;
 import org.testng.*;
-import org.testng.annotations.Test;
 
 public class TestNGListeners implements IExecutionListener, IInvokedMethodListener, ITestNGListener, ITestListener {
-    private static final String BASE_URL = PropertiesUtils.getPropertyValue("baseUrl");
-
     private String threadInfo() {
         return "[Thread-" + Thread.currentThread().getId() + "]";
     }
@@ -39,6 +36,11 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult, ITestContext context) {
+        if (method.isTestMethod()) {
+            Allure.parameter("Browser", PropertiesUtils.getBrowserType());
+            Allure.parameter("Base URL", PropertiesUtils.getBaseUrl());
+            Allure.parameter("OS", PropertiesUtils.getOSName());
+        }
     }
 
     @Override
