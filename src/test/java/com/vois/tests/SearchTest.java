@@ -16,7 +16,6 @@ public class SearchTest {
     private HomePage homePage;
     private ResultsPage resultsPage;
 
-
     private static final String SEARCH_KEYWORD = JsonUtils.getTestData("searchKeyword");
 
     @BeforeMethod(alwaysRun = true)

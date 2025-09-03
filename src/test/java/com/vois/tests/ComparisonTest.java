@@ -14,7 +14,6 @@ public class ComparisonTest {
     private HomePage homePage;
     private ResultsPage resultsPage;
 
-    private static final String BASE_URL = PropertiesUtils.getPropertyValue("baseUrl");
     private static final String SEARCH_KEYWORD = JsonUtils.getTestData("searchKeyword");
 
     @BeforeMethod(alwaysRun = true)

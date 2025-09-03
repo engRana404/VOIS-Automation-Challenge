@@ -16,7 +16,6 @@ public class PaginationTest {
     public static int page2Count;
     public static int page3Count;
 
-    private static final String BASE_URL = PropertiesUtils.getPropertyValue("baseUrl");
     private static final String SEARCH_KEYWORD = JsonUtils.getTestData("searchKeyword");
 
     @BeforeClass(alwaysRun = true)

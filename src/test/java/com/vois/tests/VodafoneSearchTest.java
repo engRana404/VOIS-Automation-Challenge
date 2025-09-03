@@ -23,7 +23,6 @@ public class VodafoneSearchTest {
     private int page2Count;
     private int page3Count;
 
-    private static final String BASE_URL = PropertiesUtils.getPropertyValue("baseUrl");
     private static final String SEARCH_KEYWORD = JsonUtils.getTestData("searchKeyword");
     private static final String EXPECTED_RELATED_TEXT = JsonUtils.getTestData("expectedRelatedText");
     private static final int EXPECTED_RELATED_SECTIONS_COUNT = Integer.parseInt(JsonUtils.getTestData("expectedRelatedCount"));
@@ -51,7 +50,6 @@ public class VodafoneSearchTest {
     @Link(name = "Bing Search Docs", url = "https://learn.microsoft.com/en-us/bing/search-apis/")
     @Issue("QA-100")
     public void searchForVodafone() {
-        BrowserActions.navigateTo(driver, BASE_URL);
         homePage.search(SEARCH_KEYWORD);
 
         Allure.addAttachment("Current URL after search", driver.getCurrentUrl());

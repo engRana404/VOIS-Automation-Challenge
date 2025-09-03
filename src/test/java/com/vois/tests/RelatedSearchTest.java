@@ -14,7 +14,6 @@ public class RelatedSearchTest {
     private HomePage homePage;
     private ResultsPage resultsPage;
 
-    private static final String BASE_URL = PropertiesUtils.getPropertyValue("baseUrl");
     private static final String SEARCH_KEYWORD = JsonUtils.getTestData("searchKeyword");
     private static final String EXPECTED_RELATED_TEXT = JsonUtils.getTestData("expectedRelatedText");
     private static final int EXPECTED_RELATED_SECTIONS_COUNT = Integer.parseInt(JsonUtils.getTestData("expectedRelatedCount"));
