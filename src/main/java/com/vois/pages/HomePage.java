@@ -15,7 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 
 public class HomePage {
     private WebDriver driver;
-    private static final String BASE_URL = PropertiesUtils.getPropertyValue("baseUrl");
+    private static final String BASE_URL = PropertiesUtils.getBaseUrl();
 
     // Locators
     private static final By searchBox = LocatorReaderUtils.getLocator("home", "searchBox");
