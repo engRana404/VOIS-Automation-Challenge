@@ -48,6 +48,10 @@ public class LocatorReaderUtils {
         return switch (type.toLowerCase()) {
             case "id" -> By.id(value);
             case "name" -> By.name(value);
+            case "class" -> By.className(value);
+            case "tag" -> By.tagName(value);
+            case "linktext" -> By.linkText(value);
+            case "partiallinktext" -> By.partialLinkText(value);
             case "xpath" -> By.xpath(value);
             case "css" -> By.cssSelector(value);
             default -> throw new IllegalArgumentException("Unknown locator type: " + type);

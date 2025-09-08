@@ -11,8 +11,8 @@
       "value": "div.b_rs"
     },
     "searchResults": {
-      "type": "xpath",
-      "value": "//li[@class='b_algo']"
+      "type": "class",
+      "value": "b_algo"
     },
     "nextPageButton": {
       "type": "xpath",
