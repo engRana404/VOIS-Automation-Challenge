@@ -5,7 +5,6 @@ import com.vois.utils.LogsUtil;
 import com.vois.utils.ValidationUtils;
 import com.vois.utils.WaitUtils;
 import com.vois.utils.actions.BrowserActions;
-import com.vois.utils.actions.ElementActions;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -49,7 +48,7 @@ public class ResultsPage {
             }
         }
         LogsUtil.info("Total related sections matching '" + expectedText + "': " + sectionIndex);
-        ValidationUtils.validateTrue(ValidationUtils.compareElementCounts(expectedSectionCount, expectedSectionCount), "Expected related sections not found.");
+        ValidationUtils.validateTrue(ValidationUtils.compareElementCounts(expectedSectionCount, expectedSectionCount), "Expected related sections found.");
         return this;
     }
 
@@ -91,7 +90,7 @@ public class ResultsPage {
         int page2Count = getSearchResultsCount();
 
         Allure.addAttachment("Comparison",
-                "Page 2 Count = " + page1Count + ", Page 3 Count = " + page2Count);
+                "Page " + pageNumber1 + " Count = " + page1Count + ", Page " + pageNumber2 +" Count = " + page2Count);
 
         ValidationUtils.validationEquals(page1Count, page2Count,
                 "Search results count on page " + pageNumber1 + " and page " + pageNumber2 + " do not match!");

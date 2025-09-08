@@ -5,16 +5,13 @@ import com.vois.utils.LogsUtil;
 import com.vois.utils.PropertiesUtils;
 import com.vois.utils.ValidationUtils;
 import com.vois.utils.actions.BrowserActions;
-import com.vois.utils.actions.ElementActions;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 public class HomePage {
-    private WebDriver driver;
+    private final WebDriver driver;
     private static final String BASE_URL = PropertiesUtils.getBaseUrl();
 
     // Locators
