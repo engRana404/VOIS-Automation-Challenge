@@ -21,12 +21,12 @@ public class ValidationUtils {
         return count1 == count2;
     }
 
-    @Step("Validate condition: {condition} with message: {message}")
+    @Step("Validate condition: {condition}")
     public static void validateTrue(boolean condition, String message) {
         Assert.assertTrue(condition, message);
     }
 
-    @Step("Validate actual: {actual} equals expected: {expected} with message: {message}")
+    @Step("Validate actual: {actual} equals expected: {expected}")
     public static void validationEquals(Object actual, Object expected, String message) {
         Assert.assertEquals(actual, expected, message);
     }

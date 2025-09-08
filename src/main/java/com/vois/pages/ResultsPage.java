@@ -48,7 +48,7 @@ public class ResultsPage {
             }
         }
         LogsUtil.info("Total related sections matching '" + expectedText + "': " + sectionIndex);
-        ValidationUtils.validateTrue(ValidationUtils.compareElementCounts(expectedSectionCount, expectedSectionCount), "Expected related sections found.");
+        ValidationUtils.validateTrue(ValidationUtils.compareElementCounts(sectionIndex, expectedSectionCount), "Expected related sections not found.");
         return this;
     }
 
