@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BrowserFactory {
-    private static final String excutionType = PropertiesUtils.getExecutionType();
+    private static final String executionType = PropertiesUtils.getExecutionType();
 
     private BrowserFactory() {
         super();
@@ -36,7 +36,7 @@ public class BrowserFactory {
                 //chromeOptions.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
                 chromeOptions.setExperimentalOption("useAutomationExtension", false);
 
-                if (!excutionType.equalsIgnoreCase("Local")) {
+                if (!executionType.equalsIgnoreCase("Local")) {
                     chromeOptions.addArguments("--headless=new", "--disable-gpu", "--window-size=1920,1080");
                 }
 
@@ -56,7 +56,7 @@ public class BrowserFactory {
                 edgeOptions.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
                 edgeOptions.setExperimentalOption("useAutomationExtension", false);
                 edgeOptions.setCapability("ms:edgeOptions", Map.of("args", List.of("--disable-blink-features=AutomationControlled")));
-                if (!excutionType.equalsIgnoreCase("Local")) {
+                if (!executionType.equalsIgnoreCase("Local")) {
                     edgeOptions.addArguments("--headless=new");
                     edgeOptions.addArguments("--disable-gpu");
                     edgeOptions.addArguments("--window-size=1920,1080");
@@ -72,7 +72,7 @@ public class BrowserFactory {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.setAcceptInsecureCerts(true);
-                if (!excutionType.equalsIgnoreCase("Local")) {
+                if (!executionType.equalsIgnoreCase("Local")) {
                     firefoxOptions.addArguments("--headless");
                 }
 
