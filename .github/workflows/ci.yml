@@ -89,7 +89,6 @@ jobs:
           path: allure-report/**
           if-no-files-found: ignore
 
-
   Edge_Windows_Tests:
     runs-on: windows-latest
     timeout-minutes: 60
